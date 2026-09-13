@@ -1,0 +1,4 @@
+.wp-dev/
+agent-tools/
+*.log
+.DS_Store

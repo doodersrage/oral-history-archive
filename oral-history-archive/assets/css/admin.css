@@ -1,0 +1,60 @@
+.oha-help {
+	color: #64605a;
+	max-width: 46rem;
+}
+
+.oha-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.85rem 1rem;
+}
+
+.oha-grid label,
+.oha-consent label,
+.oha-audio-picker,
+#oha_tape_log {
+	display: block;
+}
+
+.oha-grid span,
+.oha-consent + p span {
+	display: block;
+	margin-bottom: 0.25rem;
+	font-weight: 600;
+}
+
+.oha-grid input,
+.oha-consent + p input,
+#poststuff textarea[name="oha_restriction"] {
+	width: 100%;
+}
+
+.oha-consent {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+	margin: 0 0 1rem;
+}
+
+.oha-audio-picker audio {
+	width: 100%;
+	margin-top: 0.5rem;
+}
+
+.oha-parse-preview {
+	background: #1b1712;
+	color: #f3eee4;
+	padding: 0.75rem 1rem;
+	overflow: auto;
+	max-height: 12rem;
+}
+
+.oha-settings .form-table textarea {
+	min-height: 7rem;
+}
+
+@media (max-width: 782px) {
+	.oha-grid {
+		grid-template-columns: 1fr;
+	}
+}

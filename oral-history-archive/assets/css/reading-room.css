@@ -1,0 +1,462 @@
+:root {
+	--ink: #1b1712;
+	--ink-soft: #4a4338;
+	--paper: #f3eee4;
+	--paper-2: #e7dfd0;
+	--rule: #cfc4b0;
+	--stamp-open: #2d5a3d;
+	--stamp-restricted: #8b1e1e;
+	--stamp-embargoed: #8a5a12;
+	--accent: #5c2e1a;
+	--max: 72rem;
+}
+
+* { box-sizing: border-box; }
+
+html {
+	font-size: 18px;
+}
+
+body.oha-room {
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+	line-height: 1.5;
+}
+
+.oha-skip {
+	position: absolute;
+	left: -999px;
+	top: 0;
+}
+
+.oha-skip:focus {
+	left: 1rem;
+	top: 1rem;
+	background: #fff;
+	padding: 0.4rem 0.7rem;
+	z-index: 10;
+}
+
+.oha-masthead {
+	border-bottom: 1px solid var(--rule);
+	background: #efe8da;
+}
+
+.oha-masthead-inner,
+.oha-main,
+.oha-colophon {
+	width: min(var(--max), calc(100% - 2rem));
+	margin-inline: auto;
+}
+
+.oha-masthead-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 1rem;
+	padding: 1rem 0;
+	flex-wrap: wrap;
+}
+
+.oha-institution {
+	margin: 0;
+	font-size: 0.95rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.oha-institution a,
+.oha-nav a,
+.oha-text-link,
+.oha-aid a,
+.oha-title-link {
+	color: var(--accent);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+}
+
+.oha-institution a:hover,
+.oha-nav a:hover,
+.oha-text-link:hover,
+.oha-aid a:hover,
+.oha-title-link:hover {
+	border-bottom-color: currentColor;
+}
+
+.oha-nav {
+	display: flex;
+	gap: 1.25rem;
+	font-size: 0.95rem;
+}
+
+.oha-main {
+	padding: 2rem 0 4rem;
+}
+
+.oha-kicker {
+	margin: 0 0 0.35rem;
+	font-size: 0.75rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--ink-soft);
+}
+
+.oha-hero h1,
+.oha-record h1 {
+	margin: 0 0 0.75rem;
+	font-weight: 600;
+	font-size: clamp(1.8rem, 3vw, 2.6rem);
+	line-height: 1.15;
+}
+
+.oha-lede {
+	max-width: 42rem;
+	font-size: 1.1rem;
+	color: var(--ink-soft);
+}
+
+.oha-filters {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr auto;
+	gap: 0.75rem;
+	align-items: end;
+	margin: 2rem 0 1.25rem;
+	padding: 1rem;
+	background: var(--paper-2);
+	border: 1px solid var(--rule);
+}
+
+.oha-filters label {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	font-size: 0.8rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.oha-filters input,
+.oha-filters select,
+.oha-filters button,
+.oha-controls select,
+.oha-play {
+	font: inherit;
+	font-size: 1rem;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.oha-filters input,
+.oha-filters select {
+	padding: 0.5rem 0.6rem;
+	border: 1px solid var(--rule);
+	background: #fff;
+	color: var(--ink);
+}
+
+.oha-filters button,
+.oha-play {
+	padding: 0.55rem 0.9rem;
+	border: 1px solid var(--ink);
+	background: var(--ink);
+	color: var(--paper);
+	cursor: pointer;
+}
+
+.oha-filters button:hover,
+.oha-play:hover {
+	background: var(--accent);
+	border-color: var(--accent);
+}
+
+.oha-count {
+	margin: 0 0 0.5rem;
+	color: var(--ink-soft);
+	font-size: 0.95rem;
+}
+
+.oha-table-wrap {
+	overflow-x: auto;
+	border: 1px solid var(--rule);
+	background: #fffdf8;
+}
+
+.oha-aid {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.98rem;
+}
+
+.oha-aid th,
+.oha-aid td {
+	text-align: left;
+	padding: 0.85rem 0.9rem;
+	border-bottom: 1px solid var(--rule);
+	vertical-align: top;
+}
+
+.oha-aid th {
+	font-size: 0.75rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	font-weight: 600;
+	background: var(--paper-2);
+}
+
+.oha-aid tr:last-child td {
+	border-bottom: 0;
+}
+
+.oha-title-link {
+	font-weight: 600;
+	color: var(--ink);
+}
+
+.oha-sub {
+	color: var(--ink-soft);
+	font-size: 0.9rem;
+	margin-top: 0.2rem;
+}
+
+.oha-mono {
+	font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+	font-size: 0.88em;
+}
+
+.oha-stamp {
+	display: inline-block;
+	padding: 0.15rem 0.45rem;
+	border: 1px solid currentColor;
+	font-size: 0.72rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.oha-stamp-open { color: var(--stamp-open); }
+.oha-stamp-restricted { color: var(--stamp-restricted); }
+.oha-stamp-embargoed { color: var(--stamp-embargoed); }
+
+.oha-empty,
+.oha-sealed {
+	margin-top: 1.5rem;
+	padding: 1.5rem;
+	border: 1px dashed var(--rule);
+	background: #fffdf8;
+	max-width: 40rem;
+}
+
+.oha-empty-compact {
+	margin-top: 1rem;
+}
+
+.oha-record .oha-accession {
+	margin: 0;
+	color: var(--ink-soft);
+}
+
+.oha-meta {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+	gap: 1rem 1.5rem;
+	margin: 1.5rem 0;
+	padding: 1rem 0;
+	border-top: 1px solid var(--rule);
+	border-bottom: 1px solid var(--rule);
+}
+
+.oha-meta div { margin: 0; }
+
+.oha-meta dt {
+	font-size: 0.72rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--ink-soft);
+}
+
+.oha-meta dd {
+	margin: 0.15rem 0 0;
+}
+
+.oha-abstract {
+	max-width: 42rem;
+}
+
+.oha-player {
+	margin-top: 2rem;
+}
+
+.oha-deck {
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	padding: 1rem;
+	background: #2a241c;
+	color: #f3eee4;
+	border: 1px solid #1b1712;
+}
+
+.oha-deck-status {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	align-items: baseline;
+	margin-bottom: 0.75rem;
+}
+
+.oha-now-speaker,
+.oha-now-time {
+	margin: 0;
+}
+
+.oha-controls {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	gap: 0.75rem;
+	align-items: center;
+}
+
+.oha-controls input[type="range"] {
+	width: 100%;
+}
+
+.oha-rate {
+	display: flex;
+	gap: 0.4rem;
+	align-items: center;
+	font-size: 0.85rem;
+}
+
+.oha-rate select {
+	background: #efe8da;
+	color: var(--ink);
+	border: 0;
+	padding: 0.3rem;
+}
+
+.oha-player-msg {
+	margin: 0.75rem 0 0;
+	color: #f0c7c0;
+}
+
+.oha-transcript-wrap {
+	margin-top: 1.5rem;
+}
+
+.oha-help-inline {
+	color: var(--ink-soft);
+	font-size: 0.95rem;
+}
+
+.oha-transcript {
+	list-style: none;
+	margin: 1rem 0 0;
+	padding: 0;
+	border: 1px solid var(--rule);
+	background: #fffdf8;
+}
+
+.oha-transcript li {
+	scroll-margin-top: 7.5rem;
+}
+
+.oha-transcript li + li {
+	border-top: 1px solid var(--rule);
+}
+
+.oha-cue {
+	display: grid;
+	grid-template-columns: 6.5rem 9rem 1fr;
+	gap: 0.75rem;
+	width: 100%;
+	padding: 0.7rem 0.8rem;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+}
+
+.oha-cue:hover,
+.oha-cue:focus-visible {
+	background: var(--paper-2);
+	outline: none;
+}
+
+.oha-cue.is-active {
+	background: #efe0c8;
+}
+
+.oha-speaker {
+	font-weight: 600;
+	color: var(--accent);
+}
+
+.oha-cite {
+	margin-top: 2.5rem;
+	max-width: 42rem;
+}
+
+.oha-citation {
+	margin: 0;
+	padding: 1rem 1.1rem;
+	background: var(--paper-2);
+	border-left: 3px solid var(--accent);
+}
+
+.oha-citation p {
+	margin: 0;
+}
+
+.oha-clip {
+	margin: 1.5rem 0;
+	padding: 1rem 1.1rem;
+	border: 1px solid var(--rule);
+	background: #fffdf8;
+}
+
+.oha-clip-kicker {
+	margin: 0;
+	font-size: 0.75rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.oha-clip blockquote {
+	margin: 0.75rem 0;
+}
+
+.oha-colophon {
+	padding: 1.5rem 0 2.5rem;
+	color: var(--ink-soft);
+	font-size: 0.9rem;
+	border-top: 1px solid var(--rule);
+}
+
+@media (max-width: 800px) {
+	.oha-filters {
+		grid-template-columns: 1fr;
+	}
+
+	.oha-cue {
+		grid-template-columns: 5.2rem 1fr;
+		grid-template-areas:
+			"time speaker"
+			"line line";
+	}
+
+	.oha-time { grid-area: time; }
+	.oha-speaker { grid-area: speaker; }
+	.oha-line { grid-area: line; }
+
+	.oha-controls {
+		grid-template-columns: 1fr;
+	}
+
+	.oha-meta {
+		grid-template-columns: 1fr 1fr;
+	}
+}
