@@ -33,7 +33,7 @@ Restricted interviews never print the audio URL in public HTML.
 
 == Installation ==
 
-1. Upload the `oral-history-archive` folder to `/wp-content/plugins/`, or install the zip via **Plugins → Add New → Upload Plugin**.
+1. Upload the plugin folder to `/wp-content/plugins/oral-history-archive/`, or install the zip via **Plugins → Add New → Upload Plugin**. The main file `oral-history-archive.php` must sit directly inside that folder.
 2. Activate **Oral History Archive**.
 3. On activation the plugin creates a **Reading room** page. It does **not** change your site front page. Optionally set that page as your front page under **Settings → Reading**, or visit the Interviews archive at `/interviews/`.
 4. Add an interview: fill the record, attach audio, paste a tape log, set consent.

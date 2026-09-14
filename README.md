@@ -17,12 +17,17 @@ Restricted interviews never print the audio URL in public HTML.
 
 ## Install on an existing WordPress site
 
-1. Copy the `oral-history-archive` folder into `wp-content/plugins/`, or upload a zip of that folder.
-2. Activate **Oral History Archive**.
-3. Activation creates a **Reading room** page. It does **not** change your site front page. Optionally set that page under **Settings → Reading**, or visit `/interviews/`.
-4. Add an interview. Fill the record, attach audio, paste a tape log, set consent.
+Clone (or copy) this repository **as** the plugin directory so the main file sits one level under `plugins/`:
 
-WordPress.org submission steps: see [SUBMISSION.md](SUBMISSION.md). Plugin directory assets live in [`.wordpress-org/`](.wordpress-org/).
+```bash
+git clone https://github.com/doodersrage/wp-spark.git wp-content/plugins/oral-history-archive
+```
+
+Or upload a release zip of the plugin root (see [SUBMISSION.md](SUBMISSION.md)). Then activate **Oral History Archive**.
+
+Activation creates a **Reading room** page. It does **not** change your site front page. Optionally set that page under **Settings → Reading**, or visit `/interviews/`.
+
+WordPress.org directory assets live in [`.wordpress-org/`](.wordpress-org/).
 
 ### Tape log format
 

@@ -1,5 +1,5 @@
-# Files and paths excluded from WordPress.org / distribution zips.
-# Keep the plugin folder self-contained; exclude repo-only tooling.
+# Paths excluded from WordPress.org / distribution zips.
+# Plugin code lives at the repo root; keep demo tooling out of releases.
 
 .git
 .gitignore
@@ -7,9 +7,11 @@
 .github
 .wordpress-org
 .distignore
+.wp-dev
 SUBMISSION.md
 README.md
 scripts
 tests
-*.md
-!oral-history-archive/readme.txt
+agent-tools
+*.log
+.DS_Store

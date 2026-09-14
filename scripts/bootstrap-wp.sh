@@ -51,7 +51,7 @@ if [[ ! -f "$WP_DIR/wp-content/db.php" ]]; then
   cp "$WP_DIR/wp-content/plugins/sqlite-database-integration/db.copy" "$WP_DIR/wp-content/db.php"
 fi
 
-ln -sfn "$ROOT/oral-history-archive" "$WP_DIR/wp-content/plugins/oral-history-archive"
+ln -sfn "$ROOT" "$WP_DIR/wp-content/plugins/oral-history-archive"
 cp "$ROOT/scripts/router.php" "$WP_DIR/router.php"
 
 if [[ ! -f "$WP_DIR/wp-config.php" ]]; then

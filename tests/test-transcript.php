@@ -4,7 +4,7 @@
  */
 
 define( 'OHA_STANDALONE_TEST', true );
-require dirname( __DIR__ ) . '/oral-history-archive/includes/class-transcript.php';
+require dirname( __DIR__ ) . '/includes/class-transcript.php';
 
 $failures = 0;
 
