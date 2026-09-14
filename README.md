@@ -17,15 +17,18 @@ Restricted interviews never print the audio URL in public HTML.
 
 ## Install on an existing WordPress site
 
-Clone (or copy) this repository **as** the plugin directory so the main file sits one level under `plugins/`:
-
 ```bash
-git clone https://github.com/doodersrage/wp-spark.git wp-content/plugins/oral-history-archive
+cd wp-content/plugins
+git clone https://github.com/doodersrage/oral-history-archive.git
 ```
 
-Or upload a release zip of the plugin root (see [SUBMISSION.md](SUBMISSION.md)). Then activate **Oral History Archive**.
+That creates `wp-content/plugins/oral-history-archive/` with the main plugin file at the top level. Then activate **Oral History Archive**.
+
+Or upload a release zip of the plugin root (see [SUBMISSION.md](SUBMISSION.md)).
 
 Activation creates a **Reading room** page. It does **not** change your site front page. Optionally set that page under **Settings → Reading**, or visit `/interviews/`.
+
+`scripts/` and `tests/` are local-demo tooling. Leave them for development; omit them when building the WordPress.org zip (see `.distignore`). Plugin Check on a full git checkout will flag those files — that is expected.
 
 WordPress.org directory assets live in [`.wordpress-org/`](.wordpress-org/).
 

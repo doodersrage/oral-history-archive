@@ -17,9 +17,33 @@ class OHA_Admin {
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'settings_page' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
+		add_action( 'admin_notices', array( __CLASS__, 'slug_notice' ) );
 		add_filter( 'manage_' . OHA_Interview::POST_TYPE . '_posts_columns', array( __CLASS__, 'columns' ) );
 		add_action( 'manage_' . OHA_Interview::POST_TYPE . '_posts_custom_column', array( __CLASS__, 'column_content' ), 10, 2 );
 		add_filter( 'enter_title_here', array( __CLASS__, 'title_placeholder' ), 10, 2 );
+	}
+
+	/**
+	 * Warn when the install folder is not oral-history-archive (common with bare git clone).
+	 */
+	public static function slug_notice() {
+		if ( ! current_user_can( 'activate_plugins' ) ) {
+			return;
+		}
+		$slug = basename( dirname( OHA_FILE ) );
+		if ( 'oral-history-archive' === $slug ) {
+			return;
+		}
+		echo '<div class="notice notice-warning"><p>';
+		echo esc_html(
+			sprintf(
+				/* translators: 1: current plugin folder name, 2: required folder name */
+				__( 'Oral History Archive is installed in “%1$s”. Rename that folder to “%2$s” (or re-clone into that name) so the text domain, Plugin Check, and WordPress.org slug match.', 'oral-history-archive' ),
+				$slug,
+				'oral-history-archive'
+			)
+		);
+		echo '</p></div>';
 	}
 
 	public static function title_placeholder( $text, $post ) {

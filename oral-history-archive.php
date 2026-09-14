@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Oral History Archive
- * Plugin URI: https://github.com/doodersrage/wp-spark
+ * Plugin URI: https://github.com/doodersrage/oral-history-archive
  * Description: Interviews as archival records: timed transcripts, narrator credit, and consent that can withhold the tape.
  * Version: 1.0.3
  * Requires at least: 6.4
