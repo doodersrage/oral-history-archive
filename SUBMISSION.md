@@ -10,39 +10,22 @@ The distributable plugin is the **repository root** (`oral-history-archive.php`,
 
 1. **Enable 2FA** on the WordPress.org account that will own the plugin (required for new submissions).
 2. Confirm the WordPress.org username matches **Contributors** in [`readme.txt`](readme.txt).
-3. Build a zip of the plugin root, excluding tooling:
+3. Build a marketplace zip (excludes `scripts/`, `tests/`, `.wordpress-org/`, etc.):
 
    ```bash
-   cd /path/to/oral-history-archive
-   zip -r oral-history-archive-1.0.3.zip . \
-     -x '.git/*' \
-     -x '.wp-dev/*' \
-     -x '.wordpress-org/*' \
-     -x 'scripts/*' \
-     -x 'tests/*' \
-     -x 'agent-tools/*' \
-     -x 'SUBMISSION.md' \
-     -x 'README.md' \
-     -x '.distignore' \
-     -x '.gitignore'
+   ./scripts/build-release.sh
    ```
 
-4. Install [Plugin Check](https://wordpress.org/plugins/plugin-check/) against a **clean zip** (or a full clone — expect warnings from `scripts/` / `tests/`). Fix any **error**-level Plugin Repo findings before submitting.
+   Output: `dist/oral-history-archive-1.0.3.zip` (version comes from the plugin header).
+   Install that zip in a clean site and run [Plugin Check](https://wordpress.org/plugins/plugin-check/) on it — not on a full git checkout.
+4. Fix any **error**-level Plugin Repo findings before submitting.
 5. Smoke-test: activate without changing the front page, create one interview with audio + tape log, confirm finding aid and player, confirm a restricted interview hides audio.
 
 ## Submit for review
 
 1. Go to [Add your plugin](https://wordpress.org/plugins/developers/add/).
-2. Upload `oral-history-archive-1.0.3.zip` (archive should contain `oral-history-archive.php` at the top level inside a folder named `oral-history-archive/`, or zip so WordPress installs it under that slug).
+2. Upload `dist/oral-history-archive-1.0.3.zip` from `./scripts/build-release.sh`.
 3. Wait for the review queue email. Do not commit to SVN until the plugin is approved.
-
-Tip: for a clean install folder name, zip from a sibling copy:
-
-```bash
-mkdir -p /tmp/oha-build
-rsync -a --exclude-from=.distignore ./ /tmp/oha-build/oral-history-archive/
-cd /tmp/oha-build && zip -r oral-history-archive-1.0.3.zip oral-history-archive
-```
 
 ## After approval (SVN)
 

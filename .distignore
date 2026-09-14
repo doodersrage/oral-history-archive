@@ -8,6 +8,7 @@
 .wordpress-org
 .distignore
 .wp-dev
+dist
 SUBMISSION.md
 README.md
 scripts

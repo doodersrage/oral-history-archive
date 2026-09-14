@@ -24,7 +24,14 @@ git clone https://github.com/doodersrage/oral-history-archive.git
 
 That creates `wp-content/plugins/oral-history-archive/` with the main plugin file at the top level. Then activate **Oral History Archive**.
 
-Or upload a release zip of the plugin root (see [SUBMISSION.md](SUBMISSION.md)).
+Or build/upload a release zip:
+
+```bash
+./scripts/build-release.sh
+# → dist/oral-history-archive-*.zip
+```
+
+Then activate **Oral History Archive**.
 
 Activation creates a **Reading room** page. It does **not** change your site front page. Optionally set that page under **Settings → Reading**, or visit `/interviews/`.
 

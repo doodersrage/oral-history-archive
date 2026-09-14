@@ -1,4 +1,5 @@
 .wp-dev/
 agent-tools/
+dist/
 *.log
 .DS_Store
