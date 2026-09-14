@@ -3,7 +3,7 @@
  * Transcript parser tests. Run: php tests/test-transcript.php
  */
 
-define( 'OHA_STANDALONE_TEST', true );
+define( 'ABSPATH', __DIR__ );
 require dirname( __DIR__ ) . '/includes/class-transcript.php';
 
 $failures = 0;

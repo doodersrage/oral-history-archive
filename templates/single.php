@@ -16,8 +16,10 @@ $playable  = OHA_Interview::is_playable( $post_id );
 $seconds   = OHA_Interview::duration_seconds( $post_id );
 $audio_url = $playable ? wp_get_attachment_url( $meta['audio_id'] ) : '';
 $cues      = is_array( $meta['cues'] ) ? $meta['cues'] : array();
+// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Public deep-link start/end times; values are sanitized.
 $start_at  = isset( $_GET['t'] ) ? max( 0, (float) sanitize_text_field( wp_unslash( $_GET['t'] ) ) ) : 0;
 $end_at    = isset( $_GET['end'] ) ? max( 0, (float) sanitize_text_field( wp_unslash( $_GET['end'] ) ) ) : 0;
+// phpcs:enable WordPress.Security.NonceVerification.Recommended
 $coll      = get_the_terms( $post_id, OHA_Interview::COLLECTION );
 $topics    = get_the_terms( $post_id, OHA_Interview::TOPIC );
 $abstract  = trim( wp_strip_all_tags( get_the_content( null, false, $post_id ) ) );

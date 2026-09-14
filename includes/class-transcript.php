@@ -5,7 +5,7 @@
  * @package OralHistoryArchive
  */
 
-if ( ! defined( 'ABSPATH' ) && ! defined( 'OHA_STANDALONE_TEST' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 

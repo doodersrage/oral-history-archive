@@ -71,7 +71,12 @@ require OHA_DIR . 'templates/header.php';
 		<p><a class="oha-text-link" href="<?php echo esc_url( get_post_type_archive_link( OHA_Interview::POST_TYPE ) ); ?>"><?php esc_html_e( 'Reset catalog', 'oral-history-archive' ); ?></a></p>
 	</div>
 <?php else : ?>
-	<p class="oha-count"><?php echo esc_html( sprintf( _n( '%s interview', '%s interviews', $aid->found_posts, 'oral-history-archive' ), number_format_i18n( $aid->found_posts ) ) ); ?></p>
+	<p class="oha-count">
+		<?php
+		/* translators: %s: number of interviews */
+		echo esc_html( sprintf( _n( '%s interview', '%s interviews', $aid->found_posts, 'oral-history-archive' ), number_format_i18n( $aid->found_posts ) ) );
+		?>
+	</p>
 	<div class="oha-table-wrap">
 		<table class="oha-aid">
 			<thead>

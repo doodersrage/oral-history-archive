@@ -36,6 +36,4 @@ require_once OHA_DIR . 'includes/class-shortcodes.php';
 register_activation_hook( __FILE__, array( 'OHA_Plugin', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'OHA_Plugin', 'deactivate' ) );
 
-add_action( 'plugins_loaded', array( 'OHA_Plugin', 'load_textdomain' ) );
-
 OHA_Plugin::init();

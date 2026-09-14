@@ -21,14 +21,6 @@ class OHA_Plugin {
 		OHA_Shortcodes::init();
 	}
 
-	public static function load_textdomain() {
-		load_plugin_textdomain(
-			'oral-history-archive',
-			false,
-			dirname( plugin_basename( OHA_FILE ) ) . '/languages'
-		);
-	}
-
 	public static function activate() {
 		OHA_Interview::register();
 		self::ensure_reading_room_page();

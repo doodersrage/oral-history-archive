@@ -27,7 +27,7 @@ The distributable plugin is the **repository root** (`oral-history-archive.php`,
      -x '.gitignore'
    ```
 
-4. Install [Plugin Check](https://wordpress.org/plugins/plugin-check/) on a local WordPress site, upload/activate this plugin, and run checks. Fix any **error**-level Plugin Repo findings before submitting.
+4. Install [Plugin Check](https://wordpress.org/plugins/plugin-check/) against a **clean zip** (or a clone named `oral-history-archive`, not `wp-spark`). Fix any **error**-level Plugin Repo findings before submitting.
 5. Smoke-test: activate without changing the front page, create one interview with audio + tape log, confirm finding aid and player, confirm a restricted interview hides audio.
 
 ## Submit for review

@@ -39,7 +39,9 @@ class OHA_Shortcodes {
 					'post_type'      => OHA_Interview::POST_TYPE,
 					'post_status'    => 'publish',
 					'posts_per_page' => 1,
+					// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Lookup by accession number is intentional.
 					'meta_key'       => '_oha_accession',
+					// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Lookup by accession number is intentional.
 					'meta_value'     => sanitize_text_field( $atts['accession'] ),
 					'fields'         => 'ids',
 				)

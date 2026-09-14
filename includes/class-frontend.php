@@ -96,10 +96,30 @@ class OHA_Frontend {
 
 		$query->set( 'posts_per_page', 50 );
 		$query->set( 'orderby', 'meta_value' );
+		// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Finding aid sorts by accession.
 		$query->set( 'meta_key', '_oha_accession' );
 		$query->set( 'order', 'ASC' );
 
 		self::apply_filters_to_query( $query );
+	}
+
+	/**
+	 * Public catalog filters from the query string (read-only; no nonce).
+	 *
+	 * @return array{q:string,collection:string,rights:string}
+	 */
+	public static function request_filters() {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Public catalog filters; sanitized below.
+		$q          = isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '';
+		$collection = isset( $_GET['collection'] ) ? sanitize_title( wp_unslash( $_GET['collection'] ) ) : '';
+		$rights     = isset( $_GET['rights'] ) ? sanitize_key( wp_unslash( $_GET['rights'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+		return array(
+			'q'          => $q,
+			'collection' => $collection,
+			'rights'     => $rights,
+		);
 	}
 
 	public static function apply_filters_to_query( $query ) {
@@ -107,37 +127,35 @@ class OHA_Frontend {
 		$meta_query = $query->get( 'meta_query' );
 		$tax_query  = is_array( $tax_query ) ? $tax_query : array();
 		$meta_query = is_array( $meta_query ) ? $meta_query : array();
+		$filters    = self::request_filters();
 
-		$collection = isset( $_GET['collection'] ) ? sanitize_title( wp_unslash( $_GET['collection'] ) ) : '';
-		if ( $collection ) {
+		if ( $filters['collection'] ) {
 			$tax_query[] = array(
 				'taxonomy' => OHA_Interview::COLLECTION,
 				'field'    => 'slug',
-				'terms'    => $collection,
+				'terms'    => $filters['collection'],
 			);
 		}
 
-		$rights = isset( $_GET['rights'] ) ? sanitize_key( wp_unslash( $_GET['rights'] ) ) : '';
-		if ( 'restricted' === $rights ) {
+		if ( 'restricted' === $filters['rights'] ) {
 			$meta_query[] = array(
 				'key'   => '_oha_consent',
 				'value' => 'restricted',
 			);
-		} elseif ( 'embargoed' === $rights ) {
+		} elseif ( 'embargoed' === $filters['rights'] ) {
 			$meta_query[] = array(
 				'key'   => '_oha_consent',
 				'value' => 'embargoed',
 			);
-		} elseif ( 'open' === $rights ) {
+		} elseif ( 'open' === $filters['rights'] ) {
 			$meta_query[] = array(
 				'key'   => '_oha_consent',
 				'value' => 'public',
 			);
 		}
 
-		$q = isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '';
-		if ( $q ) {
-			$query->set( 's', $q );
+		if ( $filters['q'] ) {
+			$query->set( 's', $filters['q'] );
 		}
 
 		if ( '1' !== OHA_Plugin::setting( 'show_restricted', '1' ) ) {
@@ -156,11 +174,13 @@ class OHA_Frontend {
 	}
 
 	public static function interview_query_args() {
-		$args = array(
+		$filters = self::request_filters();
+		$args    = array(
 			'post_type'      => OHA_Interview::POST_TYPE,
 			'post_status'    => 'publish',
 			'posts_per_page' => 50,
 			'orderby'        => 'meta_value',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Finding aid sorts by accession.
 			'meta_key'       => '_oha_accession',
 			'order'          => 'ASC',
 		);
@@ -168,36 +188,33 @@ class OHA_Frontend {
 		$tax_query  = array();
 		$meta_query = array();
 
-		$collection = isset( $_GET['collection'] ) ? sanitize_title( wp_unslash( $_GET['collection'] ) ) : '';
-		if ( $collection ) {
+		if ( $filters['collection'] ) {
 			$tax_query[] = array(
 				'taxonomy' => OHA_Interview::COLLECTION,
 				'field'    => 'slug',
-				'terms'    => $collection,
+				'terms'    => $filters['collection'],
 			);
 		}
 
-		$rights = isset( $_GET['rights'] ) ? sanitize_key( wp_unslash( $_GET['rights'] ) ) : '';
-		if ( 'restricted' === $rights ) {
+		if ( 'restricted' === $filters['rights'] ) {
 			$meta_query[] = array(
 				'key'   => '_oha_consent',
 				'value' => 'restricted',
 			);
-		} elseif ( 'embargoed' === $rights ) {
+		} elseif ( 'embargoed' === $filters['rights'] ) {
 			$meta_query[] = array(
 				'key'   => '_oha_consent',
 				'value' => 'embargoed',
 			);
-		} elseif ( 'open' === $rights ) {
+		} elseif ( 'open' === $filters['rights'] ) {
 			$meta_query[] = array(
 				'key'   => '_oha_consent',
 				'value' => 'public',
 			);
 		}
 
-		$q = isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '';
-		if ( $q ) {
-			$args['s'] = $q;
+		if ( $filters['q'] ) {
+			$args['s'] = $filters['q'];
 		}
 
 		if ( '1' !== OHA_Plugin::setting( 'show_restricted', '1' ) ) {
@@ -208,9 +225,11 @@ class OHA_Frontend {
 		}
 
 		if ( $tax_query ) {
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Collection filter for finding aid.
 			$args['tax_query'] = $tax_query;
 		}
 		if ( $meta_query ) {
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Rights filter for finding aid.
 			$args['meta_query'] = $meta_query;
 		}
 
@@ -218,10 +237,6 @@ class OHA_Frontend {
 	}
 
 	public static function current_filters() {
-		return array(
-			'q'          => isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-			'collection' => isset( $_GET['collection'] ) ? sanitize_title( wp_unslash( $_GET['collection'] ) ) : '',
-			'rights'     => isset( $_GET['rights'] ) ? sanitize_key( wp_unslash( $_GET['rights'] ) ) : '',
-		);
+		return self::request_filters();
 	}
 }
