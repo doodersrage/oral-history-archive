@@ -1,14 +1,18 @@
 <?php
 /**
  * Plugin Name: Oral History Archive
+ * Plugin URI: https://github.com/doodersrage/wp-spark
  * Description: Interviews as archival records: timed transcripts, narrator credit, and consent that can withhold the tape.
- * Version: 1.0.0
+ * Version: 1.0.3
  * Requires at least: 6.4
  * Requires PHP: 8.0
- * Author: Oral History Archive
+ * Author: doodersrage
+ * Author URI: https://github.com/doodersrage
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: oral-history-archive
+ * Domain Path: /languages
+ * Tested up to: 7.1
  *
  * @package OralHistoryArchive
  */
@@ -31,5 +35,7 @@ require_once OHA_DIR . 'includes/class-shortcodes.php';
 
 register_activation_hook( __FILE__, array( 'OHA_Plugin', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'OHA_Plugin', 'deactivate' ) );
+
+add_action( 'plugins_loaded', array( 'OHA_Plugin', 'load_textdomain' ) );
 
 OHA_Plugin::init();

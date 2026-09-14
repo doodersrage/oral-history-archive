@@ -1,0 +1,15 @@
+# Files and paths excluded from WordPress.org / distribution zips.
+# Keep the plugin folder self-contained; exclude repo-only tooling.
+
+.git
+.gitignore
+.gitattributes
+.github
+.wordpress-org
+.distignore
+SUBMISSION.md
+README.md
+scripts
+tests
+*.md
+!oral-history-archive/readme.txt

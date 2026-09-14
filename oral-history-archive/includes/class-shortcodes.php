@@ -1,6 +1,6 @@
 <?php
 /**
- * Shortcodes: finding aid table and timed clips.
+ * Shortcodes: timed clips from open interviews.
  *
  * @package OralHistoryArchive
  */
@@ -13,7 +13,6 @@ class OHA_Shortcodes {
 
 	public static function init() {
 		add_shortcode( 'oha_clip', array( __CLASS__, 'clip' ) );
-		add_shortcode( 'oha_finding_aid', array( __CLASS__, 'finding_aid_note' ) );
 	}
 
 	/**
@@ -24,10 +23,10 @@ class OHA_Shortcodes {
 	public static function clip( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'id'         => 0,
-				'accession'  => '',
-				'start'      => 0,
-				'end'        => 0,
+				'id'        => 0,
+				'accession' => '',
+				'start'     => 0,
+				'end'       => 0,
 			),
 			$atts,
 			'oha_clip'
@@ -49,7 +48,7 @@ class OHA_Shortcodes {
 		}
 
 		if ( ! $post_id || ! OHA_Interview::is_playable( $post_id ) ) {
-			return '<p class="oha-clip-unavailable">This clip is not available. The interview may be restricted or missing a recording.</p>';
+			return '<p class="oha-clip-unavailable">' . esc_html__( 'This clip is not available. The interview may be restricted or missing a recording.', 'oral-history-archive' ) . '</p>';
 		}
 
 		$start = (float) $atts['start'];
@@ -67,7 +66,12 @@ class OHA_Shortcodes {
 		ob_start();
 		?>
 		<aside class="oha-clip">
-			<p class="oha-clip-kicker">Clip from <?php echo esc_html( $meta['accession'] ?: get_the_title( $post_id ) ); ?></p>
+			<p class="oha-clip-kicker">
+				<?php
+				/* translators: %s: accession number or interview title */
+				echo esc_html( sprintf( __( 'Clip from %s', 'oral-history-archive' ), $meta['accession'] ?: get_the_title( $post_id ) ) );
+				?>
+			</p>
 			<p class="oha-clip-cite"><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a>
 				· <?php echo esc_html( OHA_Transcript::seconds_to_timecode( $start ) ); ?>
 				<?php if ( $end > $start ) : ?>
@@ -81,13 +85,9 @@ class OHA_Shortcodes {
 					<?php endforeach; ?>
 				</blockquote>
 			<?php endif; ?>
-			<p><a class="oha-text-link" href="<?php echo esc_url( $url ); ?>">Listen in the reading room</a></p>
+			<p><a class="oha-text-link" href="<?php echo esc_url( $url ); ?>"><?php esc_html_e( 'Listen in the reading room', 'oral-history-archive' ); ?></a></p>
 		</aside>
 		<?php
 		return ob_get_clean();
-	}
-
-	public static function finding_aid_note() {
-		return '';
 	}
 }

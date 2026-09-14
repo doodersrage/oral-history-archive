@@ -79,7 +79,7 @@ class OHA_Frontend {
 
 	public static function title_parts( $parts ) {
 		if ( is_post_type_archive( OHA_Interview::POST_TYPE ) || ( (int) get_option( 'oha_page_id' ) && is_front_page() ) ) {
-			$parts['title'] = 'Finding aid';
+			$parts['title'] = __( 'Finding aid', 'oral-history-archive' );
 		}
 		return $parts;
 	}

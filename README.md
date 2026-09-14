@@ -17,10 +17,12 @@ Restricted interviews never print the audio URL in public HTML.
 
 ## Install on an existing WordPress site
 
-1. Copy the `oral-history-archive` folder into `wp-content/plugins/`.
+1. Copy the `oral-history-archive` folder into `wp-content/plugins/`, or upload a zip of that folder.
 2. Activate **Oral History Archive**.
-3. Add an interview. Fill the record, attach audio, paste a tape log, set consent.
-4. Visit `/interviews/` or the Reading room page created on activation.
+3. Activation creates a **Reading room** page. It does **not** change your site front page. Optionally set that page under **Settings → Reading**, or visit `/interviews/`.
+4. Add an interview. Fill the record, attach audio, paste a tape log, set consent.
+
+WordPress.org submission steps: see [SUBMISSION.md](SUBMISSION.md). Plugin directory assets live in [`.wordpress-org/`](.wordpress-org/).
 
 ### Tape log format
 
@@ -64,4 +66,3 @@ That is the difference from a podcast: a sealed interview is still part of the a
 ## License
 
 GPL-2.0-or-later
-# wp-spark

@@ -22,7 +22,7 @@ if ( is_wp_error( $collections ) ) {
 	$collections = array();
 }
 
-$heading = 'Finding aid';
+$heading = __( 'Finding aid', 'oral-history-archive' );
 if ( is_tax( OHA_Interview::COLLECTION ) ) {
 	$heading = single_term_title( '', false );
 }
@@ -31,20 +31,20 @@ require OHA_DIR . 'templates/header.php';
 ?>
 
 <section class="oha-hero">
-	<p class="oha-kicker">Special collections</p>
+	<p class="oha-kicker"><?php esc_html_e( 'Special collections', 'oral-history-archive' ); ?></p>
 	<h1><?php echo esc_html( $heading ); ?></h1>
 	<p class="oha-lede"><?php echo esc_html( $intro ); ?></p>
 </section>
 
-<form class="oha-filters" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+<form class="oha-filters" method="get" action="<?php echo esc_url( get_post_type_archive_link( OHA_Interview::POST_TYPE ) ); ?>">
 	<label class="oha-search">
-		<span>Search narrators and abstracts</span>
-		<input type="search" name="q" value="<?php echo esc_attr( $filters['q'] ); ?>" placeholder="Produce market, ferry, mill…" />
+		<span><?php esc_html_e( 'Search narrators and abstracts', 'oral-history-archive' ); ?></span>
+		<input type="search" name="q" value="<?php echo esc_attr( $filters['q'] ); ?>" placeholder="<?php esc_attr_e( 'Produce market, ferry, mill…', 'oral-history-archive' ); ?>" />
 	</label>
 	<label>
-		<span>Collection</span>
+		<span><?php esc_html_e( 'Collection', 'oral-history-archive' ); ?></span>
 		<select name="collection">
-			<option value="">All collections</option>
+			<option value=""><?php esc_html_e( 'All collections', 'oral-history-archive' ); ?></option>
 			<?php foreach ( $collections as $term ) : ?>
 				<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( $filters['collection'], $term->slug ); ?>>
 					<?php echo esc_html( $term->name ); ?>
@@ -53,22 +53,22 @@ require OHA_DIR . 'templates/header.php';
 		</select>
 	</label>
 	<label>
-		<span>Rights</span>
+		<span><?php esc_html_e( 'Rights', 'oral-history-archive' ); ?></span>
 		<select name="rights">
-			<option value="">Any status</option>
-			<option value="open" <?php selected( $filters['rights'], 'open' ); ?>>Open for listening</option>
-			<option value="restricted" <?php selected( $filters['rights'], 'restricted' ); ?>>Restricted</option>
-			<option value="embargoed" <?php selected( $filters['rights'], 'embargoed' ); ?>>Embargoed</option>
+			<option value=""><?php esc_html_e( 'Any status', 'oral-history-archive' ); ?></option>
+			<option value="open" <?php selected( $filters['rights'], 'open' ); ?>><?php esc_html_e( 'Open for listening', 'oral-history-archive' ); ?></option>
+			<option value="restricted" <?php selected( $filters['rights'], 'restricted' ); ?>><?php esc_html_e( 'Restricted', 'oral-history-archive' ); ?></option>
+			<option value="embargoed" <?php selected( $filters['rights'], 'embargoed' ); ?>><?php esc_html_e( 'Embargoed', 'oral-history-archive' ); ?></option>
 		</select>
 	</label>
-	<button type="submit">Filter catalog</button>
+	<button type="submit"><?php esc_html_e( 'Filter catalog', 'oral-history-archive' ); ?></button>
 </form>
 
 <?php if ( ! $aid->have_posts() ) : ?>
 	<div class="oha-empty">
-		<h2>No interviews match this search</h2>
-		<p>Try clearing the filters, or browse the full finding aid. Restricted tapes are listed even when you cannot play them.</p>
-		<p><a class="oha-text-link" href="<?php echo esc_url( home_url( '/' ) ); ?>">Reset catalog</a></p>
+		<h2><?php esc_html_e( 'No interviews match this search', 'oral-history-archive' ); ?></h2>
+		<p><?php esc_html_e( 'Try clearing the filters, or browse the full finding aid. Restricted tapes are listed even when you cannot play them.', 'oral-history-archive' ); ?></p>
+		<p><a class="oha-text-link" href="<?php echo esc_url( get_post_type_archive_link( OHA_Interview::POST_TYPE ) ); ?>"><?php esc_html_e( 'Reset catalog', 'oral-history-archive' ); ?></a></p>
 	</div>
 <?php else : ?>
 	<p class="oha-count"><?php echo esc_html( sprintf( _n( '%s interview', '%s interviews', $aid->found_posts, 'oral-history-archive' ), number_format_i18n( $aid->found_posts ) ) ); ?></p>
@@ -76,11 +76,11 @@ require OHA_DIR . 'templates/header.php';
 		<table class="oha-aid">
 			<thead>
 				<tr>
-					<th>Accession</th>
-					<th>Interview</th>
-					<th>Date</th>
-					<th>Rights</th>
-					<th>Duration</th>
+					<th><?php esc_html_e( 'Accession', 'oral-history-archive' ); ?></th>
+					<th><?php esc_html_e( 'Interview', 'oral-history-archive' ); ?></th>
+					<th><?php esc_html_e( 'Date', 'oral-history-archive' ); ?></th>
+					<th><?php esc_html_e( 'Rights', 'oral-history-archive' ); ?></th>
+					<th><?php esc_html_e( 'Duration', 'oral-history-archive' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -100,7 +100,12 @@ require OHA_DIR . 'templates/header.php';
 						<?php if ( $meta['narrator'] ) : ?>
 							<div class="oha-sub"><?php echo esc_html( $meta['narrator'] ); ?>
 								<?php if ( $meta['interviewer'] ) : ?>
-									<span> · interviewed by <?php echo esc_html( $meta['interviewer'] ); ?></span>
+									<span>
+										<?php
+										/* translators: %s: interviewer name */
+										echo esc_html( sprintf( __( ' · interviewed by %s', 'oral-history-archive' ), $meta['interviewer'] ) );
+										?>
+									</span>
 								<?php endif; ?>
 							</div>
 						<?php endif; ?>

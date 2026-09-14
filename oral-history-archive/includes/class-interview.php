@@ -36,18 +36,18 @@ class OHA_Interview {
 			self::POST_TYPE,
 			array(
 				'labels'              => array(
-					'name'               => 'Interviews',
-					'singular_name'      => 'Interview',
-					'add_new'            => 'Add interview',
-					'add_new_item'       => 'Add interview',
-					'edit_item'          => 'Edit interview',
-					'new_item'           => 'New interview',
-					'view_item'          => 'View interview',
-					'search_items'       => 'Search interviews',
-					'not_found'          => 'No interviews in the catalog.',
-					'not_found_in_trash' => 'No interviews in the trash.',
-					'all_items'          => 'All interviews',
-					'menu_name'          => 'Oral History',
+					'name'               => __( 'Interviews', 'oral-history-archive' ),
+					'singular_name'      => __( 'Interview', 'oral-history-archive' ),
+					'add_new'            => __( 'Add interview', 'oral-history-archive' ),
+					'add_new_item'       => __( 'Add interview', 'oral-history-archive' ),
+					'edit_item'          => __( 'Edit interview', 'oral-history-archive' ),
+					'new_item'           => __( 'New interview', 'oral-history-archive' ),
+					'view_item'          => __( 'View interview', 'oral-history-archive' ),
+					'search_items'       => __( 'Search interviews', 'oral-history-archive' ),
+					'not_found'          => __( 'No interviews in the catalog.', 'oral-history-archive' ),
+					'not_found_in_trash' => __( 'No interviews in the trash.', 'oral-history-archive' ),
+					'all_items'          => __( 'All interviews', 'oral-history-archive' ),
+					'menu_name'          => __( 'Oral History', 'oral-history-archive' ),
 				),
 				'public'              => true,
 				'show_in_rest'        => true,
@@ -69,13 +69,13 @@ class OHA_Interview {
 			self::POST_TYPE,
 			array(
 				'labels'            => array(
-					'name'          => 'Collections',
-					'singular_name' => 'Collection',
-					'search_items'  => 'Search collections',
-					'all_items'     => 'All collections',
-					'edit_item'     => 'Edit collection',
-					'add_new_item'  => 'Add collection',
-					'menu_name'     => 'Collections',
+					'name'          => __( 'Collections', 'oral-history-archive' ),
+					'singular_name' => __( 'Collection', 'oral-history-archive' ),
+					'search_items'  => __( 'Search collections', 'oral-history-archive' ),
+					'all_items'     => __( 'All collections', 'oral-history-archive' ),
+					'edit_item'     => __( 'Edit collection', 'oral-history-archive' ),
+					'add_new_item'  => __( 'Add collection', 'oral-history-archive' ),
+					'menu_name'     => __( 'Collections', 'oral-history-archive' ),
 				),
 				'public'            => true,
 				'hierarchical'      => true,
@@ -93,12 +93,12 @@ class OHA_Interview {
 			self::POST_TYPE,
 			array(
 				'labels'            => array(
-					'name'          => 'Topics',
-					'singular_name' => 'Topic',
-					'search_items'  => 'Search topics',
-					'all_items'     => 'All topics',
-					'edit_item'     => 'Edit topic',
-					'add_new_item'  => 'Add topic',
+					'name'          => __( 'Topics', 'oral-history-archive' ),
+					'singular_name' => __( 'Topic', 'oral-history-archive' ),
+					'search_items'  => __( 'Search topics', 'oral-history-archive' ),
+					'all_items'     => __( 'All topics', 'oral-history-archive' ),
+					'edit_item'     => __( 'Edit topic', 'oral-history-archive' ),
+					'add_new_item'  => __( 'Add topic', 'oral-history-archive' ),
 				),
 				'public'            => true,
 				'hierarchical'      => false,
@@ -119,13 +119,15 @@ class OHA_Interview {
 			$cues = OHA_Transcript::parse( (string) get_post_meta( $post_id, '_oha_tape_log', true ) );
 		}
 
+		$language = (string) get_post_meta( $post_id, '_oha_language', true );
+
 		return array(
 			'accession'       => (string) get_post_meta( $post_id, '_oha_accession', true ),
 			'narrator'        => (string) get_post_meta( $post_id, '_oha_narrator', true ),
 			'interviewer'     => (string) get_post_meta( $post_id, '_oha_interviewer', true ),
 			'interview_date'  => (string) get_post_meta( $post_id, '_oha_interview_date', true ),
 			'location'        => (string) get_post_meta( $post_id, '_oha_location', true ),
-			'language'        => (string) get_post_meta( $post_id, '_oha_language', true ) ?: 'English',
+			'language'        => $language ? $language : __( 'English', 'oral-history-archive' ),
 			'audio_id'        => (int) get_post_meta( $post_id, '_oha_audio_id', true ),
 			'duration'        => (float) get_post_meta( $post_id, '_oha_duration', true ),
 			'consent'         => (string) get_post_meta( $post_id, '_oha_consent', true ) ?: 'public',
@@ -162,12 +164,13 @@ class OHA_Interview {
 	public static function rights_label( $post_id ) {
 		$meta = self::get_meta( $post_id );
 		if ( 'restricted' === $meta['consent'] ) {
-			return 'Restricted';
+			return __( 'Restricted', 'oral-history-archive' );
 		}
 		if ( 'embargoed' === $meta['consent'] && self::is_embargo_active( $meta['embargo_until'] ) ) {
-			return 'Embargoed until ' . self::format_date( $meta['embargo_until'] );
+			/* translators: %s: embargo lift date */
+			return sprintf( __( 'Embargoed until %s', 'oral-history-archive' ), self::format_date( $meta['embargo_until'] ) );
 		}
-		return 'Open for listening';
+		return __( 'Open for listening', 'oral-history-archive' );
 	}
 
 	public static function rights_code( $post_id ) {
@@ -198,7 +201,8 @@ class OHA_Interview {
 			$parts[] = $meta['narrator'] . '.';
 		}
 		if ( $meta['interviewer'] ) {
-			$parts[] = 'Interview by ' . $meta['interviewer'] . '.';
+			/* translators: %s: interviewer name */
+			$parts[] = sprintf( __( 'Interview by %s.', 'oral-history-archive' ), $meta['interviewer'] );
 		}
 		if ( $meta['interview_date'] ) {
 			$parts[] = self::format_date( $meta['interview_date'] ) . '.';

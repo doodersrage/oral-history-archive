@@ -21,6 +21,14 @@ class OHA_Plugin {
 		OHA_Shortcodes::init();
 	}
 
+	public static function load_textdomain() {
+		load_plugin_textdomain(
+			'oral-history-archive',
+			false,
+			dirname( plugin_basename( OHA_FILE ) ) . '/languages'
+		);
+	}
+
 	public static function activate() {
 		OHA_Interview::register();
 		self::ensure_reading_room_page();
@@ -44,7 +52,7 @@ class OHA_Plugin {
 			'institution'     => get_bloginfo( 'name' ),
 			'rights_contact'  => get_option( 'admin_email' ),
 			'show_restricted' => '1',
-			'intro'           => 'This archive collects recorded interviews with people whose work is usually left out of the official record. You can listen where the narrator allowed it. Where they did not, the catalog still shows that the interview exists.',
+			'intro'           => __( 'This archive collects recorded interviews with people whose work is usually left out of the official record. You can listen where the narrator allowed it. Where they did not, the catalog still shows that the interview exists.', 'oral-history-archive' ),
 		);
 	}
 
@@ -69,7 +77,7 @@ class OHA_Plugin {
 
 		$page_id = wp_insert_post(
 			array(
-				'post_title'   => 'Reading room',
+				'post_title'   => __( 'Reading room', 'oral-history-archive' ),
 				'post_name'    => 'reading-room',
 				'post_status'  => 'publish',
 				'post_type'    => 'page',
@@ -79,8 +87,6 @@ class OHA_Plugin {
 
 		if ( $page_id && ! is_wp_error( $page_id ) ) {
 			update_option( 'oha_page_id', (int) $page_id );
-			update_option( 'show_on_front', 'page' );
-			update_option( 'page_on_front', (int) $page_id );
 			return (int) $page_id;
 		}
 
